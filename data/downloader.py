@@ -18,7 +18,7 @@ import sys, os, multiprocessing, csv
 from urllib import request, error
 from PIL import Image
 from io import BytesIO
-
+import tqdm
 
 
 def parse_data(data_file):
@@ -29,7 +29,7 @@ def parse_data(data_file):
 
 
 def download_image(key_url):
-    out_dir = sys.argv[2]
+    out_dir = 'train'
     (key, url) = key_url
     filename = os.path.join(out_dir, '{}.jpg'.format(key))
 
@@ -56,6 +56,8 @@ def download_image(key_url):
         print('Warning: Failed to convert image {} to RGB'.format(key))
         return 1
 
+    pil_image_rgb = pil_image_rgb.resize((256, 256), Image.ANTIALIAS)
+
     try:
         pil_image_rgb.save(filename, format='JPEG', quality=90)
     except:
@@ -74,7 +76,7 @@ def loader():
         os.mkdir(out_dir)
 
     key_url_list = parse_data(data_file)
-    pool = multiprocessing.Pool(processes=20)  # Num of CPUs
+    pool = multiprocessing.Pool(processes=10)  # Num of CPUs
     failures = sum(tqdm.tqdm(pool.imap_unordered(download_image, key_url_list), total=len(key_url_list)))
     print('Total number of download failures:', failures)
     pool.close()
