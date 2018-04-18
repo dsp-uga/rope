@@ -19,6 +19,9 @@ parser.add_argument("-in", "--inputdir", default="../data/tarin/",
 parser.add_argument("-s", "--skip", default="10000",
                     help='number of records per file')
 
+parser.add_argument("-sz", "--size", default="64",
+                    help='size of the prodused Images ( default = 64 )')
+
 
 args = parser.parse_args()
 
@@ -37,6 +40,7 @@ csv_file=csv_file_1
 counter=0
 
 records_per_file = int( args.skip )
+image_size = ( int( args.size ) ,int( args.size )  )
 for i in range (0,len(a)):
     
     if(i%100000==0 and i > 0):
@@ -47,7 +51,7 @@ for i in range (0,len(a)):
 
         try:
             y_train.append(csv_file[str(a[i].replace(train_path,'').replace('.jpg',''))])
-            X_train.append(cv2.resize(temp_x,(64,64)))
+            X_train.append(cv2.resize(temp_x,image_size))
 
         except:
 
@@ -61,6 +65,7 @@ for i in range (0,len(a)):
             y_train = []
 
     except:
+        raise
         print('error', i)
 
 
