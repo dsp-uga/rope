@@ -21,6 +21,7 @@ csv_file=csv_file_1
 
 counter=0
 to_skip=0
+records_per_file = 60000
 for i in range (0,len(a)):
     
     if(i%100000==0 and to_skip==1):
@@ -40,19 +41,17 @@ for i in range (0,len(a)):
 
             print("cant find entry")
         
-        if(i%10000==0 and to_skip==1):
-            np.save(  output_path+ '/X_train'+str(counter)+'.npy',np.array(X_train))
-            np.save(output_path+'/y_train'+str(counter)+'.npy',np.array(y_train))
-            counter+=1
-            X_train=[]
-            y_train=[]
-        
-    
-
+        if i % records_per_file == 0 and to_skip == 1:
+            np.save(output_path+ '/X_train'+ str(counter)+'.npy',np.array(X_train))
+            np.save(output_path+'/y_train'+ str(counter)+'.npy',np.array(y_train))
+            counter += 1
+            X_train = []
+            y_train = []
 
     except:
-        print('error',i)
-    to_skip=1
+        print('error', i)
+
+    to_skip = 1
     
 
 np.save('X_train_last.npy',X_train)
