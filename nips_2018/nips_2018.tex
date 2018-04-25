@@ -86,14 +86,21 @@
 
 \section{Introduction}
 
-The recent years have seen a growing 
-\begin{center}
-  \url{https://cmt.research.microsoft.com/NIPS2018/}
-\end{center}
+Neural networks have made a lot of progress in recent years owing to the presence of multiple image classification dataset like  {\cite{imagenet},\cite{cifar10},cifar{1000}}.
+Many architectures have been designed to specifically address these problems. Networks such as VGG16 {\cite{VGG}} and AlexNet {\cite{Alexnet}} have set the premise for more research.
+In this project we compare the performance of traditional networks such as the VGG-16  with that of more sophisticated designs such as customized DenseNets adopted from the works of {\cite {huang_densely}} and demonstrate that a customized DenseNet works better.
+We further utilize the concept of ensemble learning, by using a multi-pathway Neural network where one of the inputs use clustering information of all the images, and a third branch which is pretrained on the image net dataset. These along with the features extracted form the raw images demonstrate the best performance obtaining a score of xyz on the Kaggle leaderboard.
 
-Please read the instructions below carefully and follow them faithfully.
 
-\subsection{Style}
+
+\subsection{Method}
+
+A neural network based classifier such as the VGG-16 is normally used when it comes to image classification. The standard VGG-16 architecture {~\figurename{fig1}} consists of 
+multiple convolution blocks of same filter size followed by a pooling layer to downsample the image by half along both the axis.The first two blocks contain two convolution layers each with filters of size 64 and 128 respectively followed by pooling layers. The third, fourth and fifth branches contain three layers of filters of size 256, 512, and 512. Following this the original VGG paper consists of fully connected layers. 
+
+In order to reduce the number of parameter in the above architecture, we replace the fully connected layers with convolution layers of filter size (1x1). This has two improvement; firstly it reduces the number of parameter drastically since convolution layers share parameters. Secondly the utilization of convolution layers ensure that the spacial relation of the pixels are taken into account during the classification.
+
+We also investigate deeper networks, namely a 36 layer 
 
 Papers to be submitted to NIPS 2018 must be prepared according to the
 instructions presented here. Papers may only be up to eight pages
@@ -261,7 +268,8 @@ marks.\footnote{As in this example.}
 \begin{figure}
   \centering
   \fbox{\rule[-.5cm]{0cm}{4cm} \rule[-.5cm]{4cm}{0cm}}
-  \caption{Sample figure caption.}
+  \includegraphics[width=0.8\linewidth]{/fig/vgg_16_baseline.png}
+  \caption{VGG-16 Basic}
 \end{figure}
 
 All artwork must be neat, clean, and legible. Lines should be dark
