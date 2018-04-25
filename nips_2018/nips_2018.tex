@@ -106,26 +106,9 @@ Our intuition suggests that the performance of our classifier can be improved by
 
 One of the challenges with the task at hand is that many of the images are dominated by faces of the person taking the picture {\figurename{fig3-picsofhumanfaces}} and other objects. This makes the classification task harder since the image contains a lot of noise which we would like to remove. 
 
-In order to overcome this issue, we decided to introduce pretrained network to generate a probability map of the contents of the image. We use a pretrained VGG-16, trained on the Image-Net dataset. We use the probability map output by this network to improve our classification accuracy. With these two modification we observe that our performance improves by xyz.
+In order to overcome this issue, we decided to introduce pretrained network to generate a probability map of the contents of the image. We use a pretrained VGG-16, trained on the Image-Net dataset. The probability map output by this network is used to improve our classification accuracy. The intuition is that some landmarks, some local features may dominate which can help identify them. With these two modification we observe that our performance improves by xyz.
 
  
-
-Papers to be submitted to NIPS 2018 must be prepared according to the
-instructions presented here. Papers may only be up to eight pages
-long, including figures. Additional pages \emph{containing only
-  acknowledgments and/or cited references} are allowed. Papers that
-exceed eight pages of content (ignoring references) will not be
-reviewed, or in any other way considered for presentation at the
-conference.
-
-The margins in 2018 are the same as since 2007, which allow for
-$\sim$$15\%$ more words in the paper compared to earlier years.
-
-Authors are required to use the NIPS \LaTeX{} style files obtainable
-at the NIPS website as indicated below. Please make sure you use the
-current files and not previous versions. Tweaking the style files may
-be grounds for rejection.
-
 \subsection{Retrieval of style files}
 
 The style files for NIPS and other conference information are
