@@ -54,6 +54,9 @@ parser.add_argument("-tsdir", "--testdir", default='../data/test/',
 parser.add_argument("-lf", "--logfile", default="log.log",
                     help="Path to the log file, this file will contain the log records")
 
+parser.add_argument("-isz", "--imagesize", default="64",
+                    help='size of the produced Images [ DEFAULT :64]')
+
 
 
 # compile arguments
@@ -81,6 +84,7 @@ if args.preprocess :
         os.makedirs(args.testnpdir)
 
 
+# download the files if args are set
 if args.download:
     if not os.path.isfile(args.traincsv) or not os.path.isfile(args.testcsv):
         print("required files not present, exiting .....!")
@@ -89,4 +93,5 @@ if args.download:
     logging.info('starting to download files')
     dl.loader()
     logging.info('done downloading files')
+
 

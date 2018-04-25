@@ -44,26 +44,24 @@ image_size = ( int( args.size ) ,int( args.size )  )
 for i in range (0,len(a)):
     
     if(i%100000==0 and i > 0):
-        print("current=",i)
+        print("current=", i)
     try:
 
-        temp_x=cv2.imread((train_path+str(a[i].replace(train_path,'').strip())),1)
+        temp_x=cv2.imread((train_path+str(a[i].replace(train_path, '').strip())), 1)
 
         try:
-            y_train.append(csv_file[str(a[i].replace(train_path,'').replace('.jpg',''))])
-            X_train.append(cv2.resize(temp_x,image_size))
+            y_train.append(csv_file[str(a[i].replace(train_path, '').replace('.jpg', ''))])
+            X_train.append(cv2.resize(temp_x, image_size))
 
         except:
-
             print("cant find entry, skipping!")
         
         if i % records_per_file == 0 and i > 0:
-            np.save(output_path+ '/X_train'+ str(counter)+'.npy',np.array(X_train))
-            np.save(output_path+'/y_train'+ str(counter)+'.npy',np.array(y_train))
+            np.save(output_path + '/X_train' + str(counter)+'.npy', np.array(X_train))
+            np.save(output_path + '/y_train' + str(counter)+'.npy', np.array(y_train))
             counter += 1
             X_train = []
             y_train = []
-
     except:
         raise
         print('error', i)
