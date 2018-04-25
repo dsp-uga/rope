@@ -100,7 +100,15 @@ multiple convolution blocks of same filter size followed by a pooling layer to d
 
 In order to reduce the number of parameter in the above architecture, we replace the fully connected layers with convolution layers of filter size (1x1). This has two improvement; firstly it reduces the number of parameter drastically since convolution layers share parameters. Secondly the utilization of convolution layers ensure that the spacial relation of the pixels are taken into account during the classification.
 
-We also investigate deeper networks, namely a 36 layer 
+We also investigate deeper networks, namely a 36 layer densely connected convolution network. Motivated by the densely connected architecture of {\cite{huang_densely}} where every layer is connected to every other layer in a block, our version of dense network consists of five densely connected block. The first block consists of four convolution layers with 12 feature maps in each block except for the last, which consists of 36 layers. The second till fifth block also consists of 12 convolution filters in each of the seven layers except on the eight layer which increases as 64, 128, 256, 512 for each of the ultimate layer of a dense block. We also introduce batch normalization {\cite{batch_norm}} in order to ensure that the relu activation layers do not blow out of proportion. {\figurename{fig2}}.
+
+Our intuition suggests that the performance of our classifier can be improved by using hierarchical classification first before fine tuning those features. We anticipate that landmarks which are water based will be different from those which are land based and so on. Thus we cluster our 15000 classes into 100 clusters. This number was chosen arbitrarily and we would like to experiment more on this later. Thus we send to our 36 layer dense-net, the cluster information that image belongs to along with the raw image.
+
+One of the challenges with the task at hand is that many of the images are dominated by faces of the person taking the picture {\figurename{fig3-picsofhumanfaces}} and other objects. This makes the classification task harder since the image contains a lot of noise which we would like to remove. 
+
+In order to overcome this issue, we decided to introduce pretrained network to generate a probability map of the contents of the image. We use a pretrained VGG-16, trained on the Image-Net dataset. We use the probability map output by this network to improve our classification accuracy. With these two modification we observe that our performance improves by xyz.
+
+ 
 
 Papers to be submitted to NIPS 2018 must be prepared according to the
 instructions presented here. Papers may only be up to eight pages
