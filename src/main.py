@@ -20,7 +20,7 @@ import argparse
 import sys
 import os
 import logging
-
+from src.preprocessing.downloader import  downloader
 
 parser = argparse.ArgumentParser(description='Google Landmark Prediction Challenge an Ensemble Way', add_help='How to use', prog='python main.py <options>')
 
@@ -82,7 +82,11 @@ if args.preprocess :
 
 
 if args.download:
-    if not os.path.isfile( args.traincsv  ) or not os.path.isfile( args.testcsv  ):
+    if not os.path.isfile(args.traincsv) or not os.path.isfile(args.testcsv):
         print("required files not present, exiting .....!")
 
-    
+    dl = downloader(test_dir=args.testdir, test_file=args.testcsv, train_dir=args.traindir, train_file=args.traincsv)
+    logging.info('starting to download files')
+    dl.loader()
+    logging.info('done downloading files')
+
