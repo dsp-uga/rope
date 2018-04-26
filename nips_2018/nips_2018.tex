@@ -113,8 +113,16 @@ In order to overcome this issue, we decided to introduce pretrained network to g
 
 \subsubsection{Dataset}
 
-We evaluate our methods on the images of the Google Landmark recognition challenge hosted on kaggle.
-There are 1225029 images in the training set belonging to 15k classes and 117703 testing images whose classes we are to predict.
+We evaluate our methods on the images of the Google Landmark recognition challenge hosted on kaggle.{\cite{landmarkchallenge}}
+There are 1225029 images in the training set belonging to 15k classes and 117703 testing images whose classes we are to predict. The dataset consists of hashes and URL key mapped to them. The images are of different sizes and resolutions. We use a down loader script from {\cite{source}}. In total we ended up with x images since some of the links were not active.
+We experimented with different image resolution and decided to use 64x64 since the performance didnt vary much for greater resolution. The input to our networks, and the clustering algorithm were images resized to 64x64.
+\subsubsection{Experiment Settings}
+We used Keras {\cite{keras}} with tensorflow backend {\cite{tensorflow}}to implement our networks. To overcome the overfitting issue we used dropout rate of 0.3 and we also use L2 regularizer to penalize network
+weights with large magnitudes and its control hyperparameter λ is set to
+2e-4. For training, we use the Adam optimizer {\cite{adam}} with a learning rate 1e-3. All
+networks run up to 10 epochs.
+For our clustering algorithm @Omid enter here
+For our pretraining model @Parya enter here
 
 \begin{table}
   \caption{Sample table title}
