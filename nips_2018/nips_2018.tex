@@ -108,7 +108,8 @@ One of the challenges with the task at hand is that many of the images are domin
 
 In order to overcome this issue, we decided to introduce pretrained network to generate a probability map of the contents of the image. We use a pretrained VGG-16, trained on the Image-Net dataset. The probability map output by this network is used to improve our classification accuracy. The intuition is that some landmarks, local features may dominate which can help identify them. With these two modification we observe that our performance improves by xyz.
 
- 
+Our final network thus has three branches. The first branch is the same dense net described above. The second branch is a fully connected section of four layers with 32,64,128,256 nodes. The input to this second branch is the cluster number. The third branch is another fully connected section of four layers with 32,64,128,256 nodes. 
+The output of the first branch is flattened and merged with the cluster and pretrained network branch and following that we pass the results through a softmax layer with 15000 classes.
 \subsection{Experiments}
 
 \subsubsection{Dataset}
@@ -116,6 +117,9 @@ In order to overcome this issue, we decided to introduce pretrained network to g
 We evaluate our methods on the images of the Google Landmark recognition challenge hosted on kaggle.{\cite{landmarkchallenge}}
 There are 1225029 images in the training set belonging to 15k classes and 117703 testing images whose classes we are to predict. The dataset consists of hashes and URL key mapped to them. The images are of different sizes and resolutions. We use a down loader script from {\cite{source}}. In total we ended up with x images since some of the links were not active.
 We experimented with different image resolution and decided to use 64x64 since the performance didnt vary much for greater resolution. The input to our networks, and the clustering algorithm were images resized to 64x64.
+
+
+
 \subsubsection{Experiment Settings}
 We used Keras {\cite{keras}} with tensorflow backend {\cite{tensorflow}}to implement our networks. To overcome the overfitting issue we used dropout rate of 0.3 and we also use L2 regularizer to penalize network
 weights with large magnitudes and its control hyperparameter λ is set to
@@ -131,6 +135,7 @@ For our pretraining model @Parya enter here
 1
 1
 1
+
 \subsubsection{Experiment Results}
 1
 1
