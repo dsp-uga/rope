@@ -22,6 +22,10 @@ parser.add_argument("-s", "--skip", default="10000",
 parser.add_argument("-sz", "--size", default="64",
                     help='size of the prodused Images ( default = 64 )')
 
+parser.add_argument("-gm", "--generatemapping", action='store_true',
+                    help='generates mappings of hashes to records')
+
+
 
 args = parser.parse_args()
 
@@ -42,12 +46,14 @@ counter = 0
 
 records_per_file = int(args.skip)
 image_size = (int(args.size), int(args.size))
+files = []
 for i in range (0,len(file_list)):
     
     if i % 100000 == 0 and i > 0:
         print("current=", i)
     try:
-        temp_x = cv2.imread(file_list[i], 1)  #( (train_path+str(a[i].replace(train_path, '').strip())), 1)
+
+        temp_x = cv2.imread(file_list[i], 1)
 
         try:
             if args.inputfile is not None:
@@ -55,14 +61,22 @@ for i in range (0,len(file_list)):
 
             X_train.append(cv2.resize(temp_x, image_size))
 
+            files.append(os.path.splitext(os.path.basename(file_list[i]))[0])
+
         except:
             print("cant find entry, skipping!")
-        
+
         if i % records_per_file == 0 and i > 0:
-            np.save(output_path + '/X_' + str(counter)+'.npy', np.array(X_train))
+            np.save(output_path + '/X_' + str(counter) + '.npy', np.array(X_train))
             if args.inputfile is not None:
-                np.save(output_path + '/y_' + str(counter)+'.npy', np.array(y_train))
+                np.save(output_path + '/y_' + str(counter) + '.npy', np.array(y_train))
+
+            with open(output_path + '/hashes_X_' + str(counter) + '.txt', 'w') as f:
+                for pick in files:
+                    f.write(pick + "\n")
+
             counter += 1
+            files = []
             X_train = []
             y_train = []
     except:
@@ -72,6 +86,9 @@ for i in range (0,len(file_list)):
 
 # save the last section
 if len(X_train) > 0:
+    with open(output_path + '/hashes_X_' + str(counter) + '.txt', 'w') as f:
+        for pick in files:
+            f.write(pick + "\n")
     np.save(output_path + '/X_' + str(counter) + '.npy', np.array(X_train))
     if args.inputfile is not None:
         np.save(output_path + '/y_' + str(counter) + '.npy', np.array(y_train))
