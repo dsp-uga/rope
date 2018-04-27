@@ -15,7 +15,7 @@ import cv2
 
 class finalNetwork:
 
-    def __init__(self, images_dir, clustering_dir, classfication_dir):
+    def __init__(self, images_dir, clustering_dir, classfication_dir, output_dir = None):
         """
         thie function initializes the network class
         :param images_dir: 
@@ -26,6 +26,7 @@ class finalNetwork:
         self.clustering_dir = clustering_dir
         self.classification_dir = classfication_dir
         self.model = None
+        self.output_dir = output_dir
         self.model_file_name = 'finalModel.h5'
 
     def load_model(self):
@@ -376,3 +377,23 @@ class finalNetwork:
                                 shuffle=True)
 
             self.model.save('final_net_dsp.h5')
+
+    def predict(self):
+        """
+        this function runs the prediction over the sets
+        :return: 
+        """
+        if self.model is None:
+            self.load_model()
+
+        if self.model is None:
+            return None
+
+        i =0
+        X_train = np.load(os.path.join(self.images_dir, "X_" + str(i) + ".npy"))
+        X1_train = np.load(os.path.join(self.clustering_dir, "train_X_" + str(i) + ".npy"))
+        X2_train = np.load(os.path.join(self.classification_dir, "train_X_" + str(i) + ".npy"))
+
+        predicted = self.model.predict([X_train, X1_train, X2_train], batch_size=20)
+
+        return predicted

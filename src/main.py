@@ -23,6 +23,7 @@ import logging
 from src.preprocessing.downloader import downloader
 from src.models.objectClassification import ObjectClassifier
 from src.models.clustering import KMeansClusterer
+from src.models.final_model import finalNetwork
 
 parser = argparse.ArgumentParser(description='Google Landmark Prediction Challenge an Ensemble Way', add_help='How to use', prog='python main.py <options>')
 
@@ -37,6 +38,9 @@ parser.add_argument("-oc", "--classifyobjects", action='store_true',
 
 parser.add_argument("-cls", "--cluster", action="store_true",
                     help='runs the cluster command and stores clustered results')
+
+parser.add_argument("-trf", "--trainfinal", action="store_true",
+                    help='trains final network (this requires all files from previous modules)')
 
 parser.add_argument("-tcls", "--traincluster", action="store_true",
                     help='trains the clustering model and stores clustered results')
@@ -74,6 +78,14 @@ parser.add_argument("-idir", "--inputdir", default=None,
 parser.add_argument("-odir", "--outputdir", default=None,
                     help='path to output dir')
 
+parser.add_argument("-kki", "--trainimagedir", default=None,
+                    help='path to the sir with train set image numpy files')
+
+parser.add_argument("-kkc", "--clustereddir", default=None,
+                    help='path to clustered records')
+
+parser.add_argument("-kkd", "--objectsdir", default=None,
+                    help='path to object detection records')
 
 
 # compile arguments
@@ -128,3 +140,11 @@ if args.traincluster:
     km = KMeansClusterer(test_dir=args.testnpdir, train_dir=args.trainnpdir, num_classes=100,
                          output_dir=args.outputdir)
     km.train()
+
+if args.trainfinal:
+    fn = finalNetwork(images_dir=args.trainimagedir, clustering_dir=args.clustereddir, classfication_dir=args.objectsdir)
+    fn.train()
+
+if args.predictFinal:
+    fn = finalNetwork(images_dir=args.trainimagedir, clustering_dir=args.clustereddir, classfication_dir=args.objectsdir, output_dir= args.outputdir)
+    fn.predict()
