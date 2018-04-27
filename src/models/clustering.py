@@ -24,7 +24,7 @@ class KMeansClusterer:
         self.train_dir = train_dir
         self.test_dir = test_dir
         self.output_dir  = output_dir
-        self.model_file_name = "models/kmeans_%d_Classes.pkl" % num_classes
+        self.model_file_name = "kmeans_%d_Classes.pkl" % num_classes
         self.model = None
 
     def load_model(self):

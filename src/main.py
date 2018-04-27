@@ -22,6 +22,7 @@ import os
 import logging
 from src.preprocessing.downloader import downloader
 from src.models.objectClassification import ObjectClassifier
+from src.models.clustering import KMeansClusterer
 
 parser = argparse.ArgumentParser(description='Google Landmark Prediction Challenge an Ensemble Way', add_help='How to use', prog='python main.py <options>')
 
@@ -33,6 +34,12 @@ parser.add_argument("-pp", "--preprocess", action='set_true',
 
 parser.add_argument("-oc", "--classifyobjects", action='store_true',
                     help='add to run the object classification, it will require an input and output directory')
+
+parser.add_argument("-cls", "--cluster", action="store_true",
+                    help='runs the cluster command and stores clustered results')
+
+parser.add_argument("-tcls", "--traincluster", action="store_true",
+                    help='trains the clustering model and stores clustered results')
 
 parser.add_argument("-sb", "--storebatch", default=10000 , type=int,
                     help='number of records per numpy storage file')
@@ -93,7 +100,6 @@ if args.preprocess :
     if not os.path.isdir(args.testnpdir):
         os.makedirs(args.testnpdir)
 
-
 # download the files if args are set
 if args.download:
     if not os.path.isfile(args.traincsv) or not os.path.isfile(args.testcsv):
@@ -110,3 +116,15 @@ if args.classifyobjects:
     cls = ObjectClassifier(input_dir= args.inputdir, output_dir=args.outputdir)
     cls.classify()
     logging.info("done classifying objects")
+
+
+# cluster records and store them into a file
+if args.cluster:
+    km = KMeansClusterer(test_dir=args.testnpdir, train_dir=args.trainnpdir, num_classes=100,
+                         output_dir=args.outputdir)
+    km.cluster()
+
+if args.traincluster:
+    km = KMeansClusterer(test_dir=args.testnpdir, train_dir=args.trainnpdir, num_classes=100,
+                         output_dir=args.outputdir)
+    km.train()
