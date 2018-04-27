@@ -362,7 +362,7 @@ def UNet(input_shape,learn_rate=1e-3):
     final_op=Dense(15000, activation='softmax',name='final_op')(after_merger_layers_4)
 
     model = Model(inputs=[inputs,inputtwo,xinputtwo], outputs=final_op)
-    model.compile(optimizer='adadelta',loss='categorical_crossentropy',metrics=['accuracy'])
+    model.compile(optimizer='adagrad',loss='categorical_crossentropy',metrics=['accuracy'])
     model.summary()
 
     return model
