@@ -350,8 +350,16 @@ def UNet(input_shape,learn_rate=1e-3):
     xlayerfour=Dense(256,activation='relu' )(xlayerthree)
     ########################################
     final_merge=concatenate([flatten_block,inputtwo,xlayerfour])
+    #mixing the input of the three branches
 
-    final_op=Dense(15000, activation='softmax',name='final_op')(final_merge)
+    after_merger_layers_1=Dense(32,activation='relu' )(final_merge)
+    after_merger_layers_2=Dense(64,activation='relu' )(after_merger_layers_1)
+    after_merger_layers_3=Dense(128,activation='relu' )(after_merger_layers_2)
+    after_merger_layers_4=Dense(256,activation='relu' )(after_merger_layers_3)
+
+
+
+    final_op=Dense(15000, activation='softmax',name='final_op')(after_merger_layers_4)
 
     model = Model(inputs=[inputs,inputtwo,xinputtwo], outputs=final_op)
     model.compile(optimizer='adadelta',loss='categorical_crossentropy',metrics=['accuracy'])
