@@ -26,7 +26,7 @@
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
 
-\title{Formatting instructions for NIPS 2018}
+\title{Google Landmark Recognition Challenge, The Ensemble Way }
 
 % The \author macro works with any number of authors. There are two
 % commands used to separate the names and addresses of multiple
@@ -110,6 +110,7 @@ In order to overcome this issue, we decided to introduce pretrained network to g
 
 Our final network thus has three branches. The first branch is the same dense net described above. The second branch is a fully connected section of four layers with 32,64,128,256 nodes. The input to this second branch is the cluster number. The third branch is another fully connected section of four layers with 32,64,128,256 nodes. 
 The output of the first branch is flattened and merged with the cluster and pretrained network branch and following that we pass the results through a softmax layer with 15000 classes.
+
 \subsection{Experiments}
 
 \subsubsection{Dataset}
@@ -125,11 +126,9 @@ We used Keras {\cite{keras}} with tensorflow backend {\cite{tensorflow}}to imple
 weights with large magnitudes and its control hyperparameter λ is set to
 2e-4. For training, we use the Adam optimizer {\cite{adam}} with a learning rate 1e-3. All
 networks run up to 10 epochs.
-For our clustering algorithm @Omid enter here
-1
-1
-1
-1
+For our clustering algorithm We have used KMeans algorithm in two settings. In first Setting we clustered 64*64 images into 1000 clusters; later we reduced the number of clusters to 100 as we observed it helps reduce the calculation complexity.
+
+
 For our pretraining model @Parya enter here
 1
 1
