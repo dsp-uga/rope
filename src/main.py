@@ -20,7 +20,8 @@ import argparse
 import sys
 import os
 import logging
-from src.preprocessing.downloader import  downloader
+from src.preprocessing.downloader import downloader
+from src.models.objectClassification import ObjectClassifier
 
 parser = argparse.ArgumentParser(description='Google Landmark Prediction Challenge an Ensemble Way', add_help='How to use', prog='python main.py <options>')
 
@@ -29,6 +30,9 @@ parser.add_argument("-dl", "--download", action='set_true',
 
 parser.add_argument("-pp", "--preprocess", action='set_true',
                     help='asks the program to preprocess the data( csv address and output should be supplied! )')
+
+parser.add_argument("-oc", "--classifyobjects", action='store_true',
+                    help='add to run the object classification, it will require an input and output directory')
 
 parser.add_argument("-sb", "--storebatch", default=10000 , type=int,
                     help='number of records per numpy storage file')
@@ -56,6 +60,12 @@ parser.add_argument("-lf", "--logfile", default="log.log",
 
 parser.add_argument("-isz", "--imagesize", default="64",
                     help='size of the produced Images [ DEFAULT :64]')
+
+parser.add_argument("-idir", "--inputdir", default=None,
+                    help='path to input dir')
+
+parser.add_argument("-odir", "--outputdir", default=None,
+                    help='path to output dir')
 
 
 
@@ -94,4 +104,9 @@ if args.download:
     dl.loader()
     logging.info('done downloading files')
 
-
+# run the classification
+if args.classifyobjects:
+    logging.info("starting to classify objects")
+    cls = ObjectClassifier(input_dir= args.inputdir, output_dir=args.outputdir)
+    cls.classify()
+    logging.info("done classifying objects")
