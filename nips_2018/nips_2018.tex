@@ -123,17 +123,13 @@ We experimented with different image resolution and decided to use 64x64 since t
 
 \subsubsection{Experiment Settings}
 We used Keras {\cite{keras}} with tensorflow backend {\cite{tensorflow}}to implement our networks. To overcome the overfitting issue we used dropout rate of 0.3 and we also use L2 regularizer to penalize network
-weights with large magnitudes and its control hyperparameter λ is set to
+weights with large magnitudes and its control hyperparameter  λ is set to
 2e-4. For training, we use the Adam optimizer {\cite{adam}} with a learning rate 1e-3. All
 networks run up to 10 epochs.
+
 For our clustering algorithm We have used KMeans algorithm in two settings. In first Setting we clustered 64*64 images into 1000 clusters; later we reduced the number of clusters to 100 as we observed it helps reduce the calculation complexity.
 
-
-For our pretraining model @Parya enter here
-1
-1
-1
-1
+For object classification, we have employed VGG16, VGG19, ResNet50, Inception V3, Xception pretrained models on Imagenet dataset for object classification of our dataset and chosen ResNet50 to continue the experiment with. This desicion was made after running a selected handfull of images through these networks and observing the classificatoin resutls based on number of objects each detected in the images and their coresponding confidence.
 
 \subsubsection{Experiment Results}
 1
