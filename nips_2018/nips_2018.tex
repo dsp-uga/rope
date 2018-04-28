@@ -166,17 +166,20 @@ The best performance was obtai
 	\begin{center}
 		\begin{tabular}{ |c|c|c|c| } 
 			\hline
-			Network-type & Training-Accuracy & Kaggle-TestSet &Kaggle-Rank\\ 
+			Network-type & Training-Accuracy & Kaggle-TestSet\\ 
 			\hline
 			VGG-16 & 0.0535 & N/A & N/A \\ 
-			Dense-Net & 0.5487 & 0.005&91th \\ 
-			Ensemble-Net& 0.4829 & cell9 \\ 
+			Dense-Net & 0.5487 & 0.005 &91 \\ 
+			Ensemble-Net& 0.4829 & 0.005 & (Rank not updated) \\
+			 
 			\hline
 		\end{tabular}
 	\end{center}
 \end{table}
 
-
+\subsubsection{Conclusion }
+We explored the Kaggle challenged of Landmark Recognition. It was challenging to handle 15000 classes but we were able to get in the top 50 percentile with our architectures.
+Increase in number of features such as clustering and using features of pretrained networks while would be intuitively promising, seemed to make no difference. We suspect this is because it generates too many unrelated features which we can selectively improve.
 \section*{References}
 
 
